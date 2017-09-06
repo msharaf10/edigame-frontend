@@ -1,27 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import SignupForm from './signup-form.jsx';
+import Navbar from '../navbar.jsx';
+import { SignupForAdmin, SignupForUser } from './signup-form.jsx';
 
 class Main extends React.Component {
-    tokenIsValid ( token ) {
-        if ( !token ){
-            return false;
-        } else if ( token ) {
-            const userToken = JSON.parse( atob( token.split( '.' )[ 1 ] ) );
-            if ( !userToken.hasOwnProperty( 'id' ) )
-                return false;
-            else if ( !userToken )
-                return false;
-            return true;
+    constructor() {
+        super();
+
+        this.state = {
+            isAdmin: false
+        };
+    }
+
+    componentWillMount() {
+        if ( window.location.href.indexOf( 'admin' ) > -1 ) {
+            this.setState({
+                isAdmin: true
+            });
         }
     }
+
     render() {
-        const content = this.tokenIsValid( localStorage.token ) ? <h1>Not allowd</h1> : <SignupForm />;
+        const Form = this.state.isAdmin ? <SignupForAdmin /> : <SignupForUser />;
         return (
             <div className='content-wrap'>
                 <div className='content'>
-                    { content }
+                    { Form }
                 </div>
             </div>
         );
@@ -29,7 +34,4 @@ class Main extends React.Component {
 }
 
 const root = document.getElementById( 'root' );
-ReactDOM.render(
-    <Main />,
-    root
-);
+ReactDOM.render( <Main />, root );
