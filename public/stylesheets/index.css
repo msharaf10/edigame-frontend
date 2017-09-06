@@ -30,15 +30,6 @@ body {
 /* ========================= */
 /*  login form
 /* ========================= */
-/*.login-form {
-    margin: auto;
-    width: 300px;
-    padding: 10px 20px 5px 20px;
-    border-radius: 5px;
-    border: 1px solid rgba(0,0,0,0.05);
-    background: rgba(0,0,0,0.2);
-    text-align: center;
-}*/
 .login-form-wrap {
     margin: auto;
     width: 300px;
@@ -65,12 +56,10 @@ body {
     color: rgba(255,255,255,0.6) ;
 }
 
-.login-form .form-control:focus {
-    background: rgba(255,255,255,0.4);
+.login-form .btn {
+    margin-top: 10px;
 }
 
-.btn {
-    margin-top: 10px;
-    cursor: pointer;
+.login-form .btn-outline-success {
     margin-right: 5px;
 }

@@ -66,3 +66,18 @@ body {
     font-weight: 500;
     text-align: left;
 }
+
+.redirect-form {
+    color: #eee;
+    transition-duration: 0.2s;
+}
+
+.redirect-form:hover {
+    color: #69b1ff;
+}
+.fa-long-arrow-right {
+    margin-left: 15px;
+}
+.fa-long-arrow-left {
+    margin-right: 15px;
+}
