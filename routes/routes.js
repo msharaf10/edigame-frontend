@@ -83,7 +83,7 @@ router.get( '/my-team', ( req, res, next ) => {
 
 router.get( '/teams/create', ( req, res, next ) => {
     res.sendFile( path.join( __dirname, '../public/views', 'create-team.html' ) );
-})
+});
 
 // APIs
 router.get( '/teams/get-all-teams', ( req, res, next ) => {
@@ -94,6 +94,25 @@ router.get( '/teams/get-one-team', ( req, res, next ) => {
     request.get( config.apiURL + '/teams' ).pipe( res );
 });
 
+router.post( '/teams/create', ( req, res, next ) => {
+    request.post( config.apiURL + '/teams', {
+        headers: { 'x-access-token' : req.headers[ 'x-access-token' ] },
+        form: req.body
+    }).pipe( res );
+});
+
+router.put( '/teams', ( req, res, next ) => {
+    request.put( config.apiURL + '/teams/' + req.body.id, {
+        headers: { 'x-access-token' : req.headers[ 'x-access-token' ] },
+        form: req.body
+    }).pipe( res );
+});
+
+router.delete( '/teams', ( req, res, next ) => {
+    request.delete( config.apiURL + '/teams/' + req.body.id, {
+        headers: { 'x-access-token' : req.headers[ 'x-access-token' ] }
+    }).pipe( res );
+})
 // ======================
 // rooms
 // ======================
