@@ -144,7 +144,12 @@ export class SignupForAdmin extends React.Component {
             return false;
         }
 
-        let random_avatar = 'ava_' + ( Math.round( Math.random() * 7 ) + 1 );
+        // set background position x, y
+        let x = Math.round(Math.random() * 110 );
+        let y = Math.round(Math.random() * 20 );
+
+        if ( x === 0 ) { x = x; } else { x = -x; }
+        if ( y === 0 ) { y = y; } else { y = -y; }
 
         var data = {
             firstName: this.state.firstName,
@@ -154,7 +159,10 @@ export class SignupForAdmin extends React.Component {
             password: this.state.password,
             companyName: this.state.companyName,
             isAdmin: true,
-            profPic: random_avatar
+            profPic: {
+                x: x.toString(),
+                y: y.toString()
+            }
         }
 
         fetch( '/signup', {
@@ -173,9 +181,7 @@ export class SignupForAdmin extends React.Component {
                 errorMessage: 'Registered Successfully',
                 displayError: 'alert alert-success'
             });
-            setTimeout( function() {
-                window.location = '/';
-            }, 3000 );
+            window.location = '/';
         }
 
         function errorHandler( err, message ) {
@@ -383,7 +389,12 @@ export class SignupForUser extends React.Component {
             return false;
         }
 
-        let random_avatar = 'ava_' + ( Math.round( Math.random() * 7 ) + 1 );
+        // set background position x, y
+        let x = Math.round(Math.random() * 110 );
+        let y = Math.round(Math.random() * 20 );
+
+        if ( x === 0 ) { x = x; } else { x = -x; }
+        if ( y === 0 ) { y = y; } else { y = -y; }
 
         var data = {
             firstName: this.state.firstName,
@@ -392,9 +403,11 @@ export class SignupForUser extends React.Component {
             email: this.state.email,
             phone: this.state.phone,
             password: this.state.password,
-            companyName: this.state.companyName,
-            isAdmin: this.state.isAdmin,
-            profPic: random_avatar
+            isAdmin: false,
+            profPic: {
+                x: x.toString(),
+                y: y.toString()
+            }
         }
 
         fetch( '/signup', {
@@ -413,9 +426,7 @@ export class SignupForUser extends React.Component {
                 errorMessage: 'Registered Successfully',
                 displayError: 'alert alert-success'
             });
-            setTimeout( function() {
-                window.location = '/';
-            }, 3000 );
+            window.location = '/';
         }
 
         function errorHandler( err, message ) {
