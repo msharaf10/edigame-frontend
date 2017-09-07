@@ -6,7 +6,7 @@
                 window.location = '/';
             } else {
                 var user = JSON.parse( atob( localStorage.token.split( '.' )[ 1 ] ) );
-                if ( user.isAdmin ) {
+                if ( !user.isAdmin ) {
                     window.location = '/';
                 }
             }
@@ -26,6 +26,6 @@
     <body>
 		<div id="root"></div>
         <script src="http://localhost:35729/livereload.js"></script><!-- remove in production ENV -->
-		<script src="/js/create-team.min.js"></script>
+		<script src="/js/newTeam.min.js"></script>
     </body>
 </html>
