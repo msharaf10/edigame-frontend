@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import regex from '../helpers/regex';
 import Navbar from '../navbar.jsx';
 
 const user = JSON.parse( atob( localStorage.token.split( '.' )[ 1 ] ) );
@@ -82,9 +83,19 @@ export default class CreateTeamForm extends React.Component {
             });
         }
 
-        if ( this.state.teamName.length <= 5 ) {
+
+        if ( !( regex.stringHasSpace ).test( this.state.teamName ) ) {
             this.setState({
-                errorMessage: 'Team length must be more than 5 chars',
+                errorMessage: 'Only characters, numbers, underscore and dashes are valide names',
+                displayError: 'alert alert-danger',
+                submitButton: 'Create team'
+            });
+            return false;
+        }
+
+        if ( this.state.teamName.length <= 7 ) {
+            this.setState({
+                errorMessage: 'Team length must be more than 7 chars',
                 displayError: 'alert alert-danger',
                 submitButton: 'Create team'
             });
@@ -120,7 +131,8 @@ export default class CreateTeamForm extends React.Component {
 
         var data = {
             teamName: this.state.teamName,
-            companyName: this.state.companyName
+            companyName: this.state.companyName,
+            adminId: user.id
         }
 
         fetch( '/teams/create', {
@@ -130,19 +142,18 @@ export default class CreateTeamForm extends React.Component {
             },
     	    method: 'POST',
     	    body: JSON.stringify( data )
-    	}).then(function( res ) {
-    	    if ( !res.ok ) return errorHandler( res );
-    	    res.json().then( signupSuccess );
-    	}).catch( errorHandler );
+    	}).then( newTeamSuccess )
+    	.catch( errorHandler );
 
-        function signupSuccess( res ) {
-            alert( 'success' );
+        function newTeamSuccess( res ) {
+            if ( !res.ok ) return errorHandler( res );
+
             that.setState({
-                errorMessage: this.state.teamName + ' Created Successfully',
+                errorMessage: that.state.teamName + ' Created Successfully',
                 displayError: 'alert alert-success'
             });
             setTimeout( function() {
-                window.location = '/';
+                window.location = '/team/' + data.teamName;
             }, 3000 );
         }
 
@@ -155,7 +166,7 @@ export default class CreateTeamForm extends React.Component {
                         submitButton: 'Create account'
                     });
                 });
-            if ( message ) return that.setStatus({
+            if ( message ) return that.setState({
                 errorMessagemessage: message,
                 displayError: 'alert alert-danger',
                 submitButton: 'Create account'
