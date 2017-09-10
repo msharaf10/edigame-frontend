@@ -113,7 +113,7 @@ class  AdminPage extends React.Component {
             );
 
         } else {
-            return <SearchTeamBox />;
+            return <TeamNotFound />;
         }
     }
 
@@ -126,7 +126,8 @@ class TeamMempers extends React.Component {
         this.state = {
             players: [],
             company: '',
-            isValidTeam: false
+            isValidTeam: 'no',
+            pending: ''
         }
     }
 
@@ -138,6 +139,7 @@ class TeamMempers extends React.Component {
         .then( ( res ) => {
             if ( !res.ok ) return errorHandler( res );
             res.json().then( ( data ) => that.setState({
+                isValidTeam: true,
                 players:data[ 0 ],
                 company: data[ 1 ]
             }) )

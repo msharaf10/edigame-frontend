@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 const urlParts = window.location.pathname.split( '/' );
 const teamName = urlParts[ 2 ];
 
-export default class SearchTeamBox extends React.Component {
+export default class TeamNotFound extends React.Component {
     constructor( props ) {
         super( props );
 
