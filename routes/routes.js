@@ -112,25 +112,55 @@ router.delete( '/teams', ( req, res, next ) => {
     }).pipe( res );
 });
 
-router.post( '/teams/add-player', ( req, res, next ) => {
+router.post( '/api/teams/add/player', ( req, res, next ) => {
     console.log( req.body );
-    request.post( config.apiURL + '/teams/add-user-to-team', {
+    request.post( config.apiURL + '/teams/add/user', {
         headers: { 'x-access-token': req.headers[ 'x-access-token' ] },
         form: req.body
     }).pipe( res );
 });
+
+router.post( '/api/teams/remove/player', ( req, res, next ) => {
+    request.post( config.apiURL + '/teams/remove/user', {
+        headers: { 'x-access-token': req.headers[ 'x-access-token' ] },
+        form: req.body
+    }).pipe( res );
+});
+
 // ======================
 // rooms
 // ======================
+// serve files
+router.get( '/room/team/:id/ready', ( req, res, next ) => {
+    res.sendFile( path.join( __dirname, '../public/views', 'room-ready.html' ) );
+});
 
+router.get( '/room/team/:id/online', ( req, res, next ) => {
+    res.sendFile( path.join( __dirname, '../public/views', 'room-online.html' ) );
+});
+
+// APIs
+router.put( '/api/room/ready/:id', ( req, res, next ) => {
+    request.get( config.apiURL + '/room/ready/' + req.params.id ).pipe( res );
+});
+
+router.get( '/api/room/online/:id', ( req, res, next ) => {
+    request.get( config.apiURL + '/room/online/' + req.params.id ).pipe( res );
+});
+
+router.put( '/api/room/player/ready/toggle/:id', ( req, res, next ) => {
+    request.put( config.apiURL + '/room/user/ready/toggle' + req.params.id)
+});
 
 // ======================
 // Search
 // ======================
+// serve files
 router.get( '/search', (req, res, next ) => {
     res.sendFile( path.join( __dirname, '../public/views', 'search.html' ) );
 });
 
+// APIs
 router.get( '/api/search/user', ( req, res, next ) => {
     request.get( config.apiURL + '/search/user?q=' + req.query.q ).pipe( res );
 });
@@ -138,4 +168,9 @@ router.get( '/api/search/user', ( req, res, next ) => {
 router.get( '/api/search/team', ( req, res, next ) => {
     request.get( config.apiURL + '/search/team?q=' + req.query.q ).pipe( res );
 });
+
+router.get( '/api/search/team/:name/players', ( req, res, next ) => {
+    request.get( config.apiURL + '/teams/users/' + req.params.name ).pipe( res );
+})
+
 module.exports = router;
