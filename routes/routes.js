@@ -20,19 +20,15 @@ router.get( '/', ( req, res, next ) => {
 });
 
 router.get( '/signup', ( req, res, next ) => {
-    res.sendFile( path.join( __dirname, '../public/views', 'signup.html' ) );
-});
-
-router.get( '/signup/admin', ( req, res, next ) => {
-    res.sendFile( path.join( __dirname, '../public/views', 'signup-admin.html' ) );
+    res.sendFile( path.join( __dirname, '../public/views', 'index.html' ) );
 });
 
 router.get( '/players', ( req, res, next ) => {
-    res.sendFile( path.join( __dirname, '../public/views', 'users.html' ) );
+    res.sendFile( path.join( __dirname, '../public/views', 'index.html' ) );
 });
 
 router.get( '/settings', ( req, res, next ) => {
-    res.sendFile( path.join( __dirname, '../public/views', 'settings.html' ) );
+    res.sendFile( path.join( __dirname, '../public/views', 'index.html' ) );
 });
 
 // APIs
@@ -72,15 +68,15 @@ router.delete( '/user', ( req, res, next ) => {
 // ======================
 // serve files
 router.get( '/teams', ( req, res, next ) => {
-    res.sendFile( path.join( __dirname, '..', '/public/views', 'teams.html' ) );
+    res.sendFile( path.join( __dirname, '..', '/public/views', 'index.html' ) );
 });
 
 router.get( '/teams/create', ( req, res, next ) => {
-    res.sendFile( path.join( __dirname, '../public/views', 'create-team.html' ) );
+    res.sendFile( path.join( __dirname, '../public/views', 'index.html' ) );
 });
 
 router.get( '/team/:name', ( req, res, next ) => {
-    res.sendFile( path.join( __dirname, '../public/views', 'team.html' ) );
+    res.sendFile( path.join( __dirname, '../public/views', 'index.html' ) );
 });
 
 // APIs
