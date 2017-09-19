@@ -1,6 +1,6 @@
 import React from 'react';
 
-import regex from '../helpers/regex';
+import helpers from '../helpers/helpers';
 
 export default class LoginForm extends React.Component {
     constructor( props ) {
@@ -15,10 +15,8 @@ export default class LoginForm extends React.Component {
             displayError: ''
         };
 
-        this._checkEmptyFields = this._checkEmptyFields.bind( this );
         this._handleChange = this._handleChange.bind( this );
         this._loginUser = this._loginUser.bind( this );
-        this._userInputIsValid = this._userInputIsValid.bind( this );
         this._redirectSignup = this._redirectSignup.bind( this );
     }
 
@@ -33,55 +31,54 @@ export default class LoginForm extends React.Component {
     }
 
     _checkEmptyFields( target, emptyFields ) {
-        var emptyFeilds = [];
+        var emptyFields = [];
         for ( var i = 0; i < target.length; i++ ) {
             var child = target[i];
             if ( child.nodeName === 'INPUT' ) {
                 if ( child.value == '' && child.hasAttribute( 'required' ) ) {
-                    emptyFeilds.push( child );
+                    emptyFields.push( child );
                 }
             }
         }
-        return emptyFeilds;
+        return emptyFields;
     }
 
     _userInputIsValid( e ) {
         let form = document.forms[ 0 ];
-        let emptyFeilds = this._checkEmptyFields( form );
-        let emptyFeildsNames = [];
+        let emptyFields = this._checkEmptyFields( form );
 
-        if ( emptyFeilds.length ) {
-            for ( var i in emptyFeilds ) {
-                emptyFeildsNames.push( emptyFeilds[ i ].placeholder );
+        let emptyFieldsNames = [];
+
+        if ( emptyFields.length ) {
+            for ( var i in emptyFields ) {
+                emptyFieldsNames.push( emptyFields[ i ].placeholder );
             }
         }
 
-        if (  emptyFeildsNames.length ) {
-            if ( emptyFeildsNames.length === 1 && emptyFeildsNames[ 0 ] == 'Email' ) {
-                this.setState({
-                    errorMessage: 'Missing email',
-                    displayError: 'alert alert-danger',
-                    submitButton: 'Login'
-                });
-                return false;
-            } else if ( emptyFeildsNames.length === 1 && emptyFeildsNames[ 0 ] == 'Password') {
-                this.setState({
-                    errorMessage: 'Missing password',
-                    displayError: 'alert alert-danger',
-                    submitButton: 'Login'
-                });
-                return false;
-            } else {
-                this.setState({
-                    errorMessage: 'Missing email and password',
-                    displayError: 'alert alert-danger',
-                    submitButton: 'Login'
-                });
-                return false;
+        let errorField = false;
+
+        emptyFieldsNames.forEach( ( field ) => {
+            if ( errorField ) return;
+
+            if ( emptyFieldsNames.length && field === 'Email' ) {
+                errorField = 'Missing ' + field;
             }
+
+            if ( emptyFieldsNames.length && field === 'Password' ) {
+                errorField = 'Missing ' + field;
+            }
+        });
+
+        if ( errorField ) {
+            this.setState({
+                errorMessage: errorField,
+                displayError: 'alert alert-danger',
+                submitButton: 'Login'
+            });
+            return false;
         }
 
-        if ( !( regex.email ).test( this.state.email ) ) {
+        if ( !( helpers.regex.email ).test( this.state.email ) ) {
             this.setState({
                 errorMessage: 'Wrong email',
                 displayError: 'alert alert-danger',

@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router , Route, Link } from 'react-router-dom';
+import helpers from '../helpers/helpers';
 
 // ----------  All required components  ---------- //
 import Navbar from '../navbar.jsx';
 import LoginForm from './login-form.jsx';
 import SignupForm from '../signup/signup-form.jsx';
 import Users from '../users/users.jsx';
-// settings
-// teams
-// tesms/create
+import Settings from '../settings/settings.jsx';
+import userTeams from '../teams/user-teams.jsx';
+import Teams from '../teams/teams.jsx';
+//import CreateTeam from '../teams/create-team.jsx';
 import getTeam from '../team/get-team.jsx';
 import Search from '../search/search.jsx';
 
@@ -30,21 +32,8 @@ class LoginOrSignup extends React.Component {
 
 class Main extends React.Component {
 
-    tokenIsValid ( token ) {
-        if ( !token ){
-            return false;
-        } else if ( token ) {
-            const user = JSON.parse( atob( localStorage.token.split( '.' )[ 1 ] ) );
-            if ( !user.hasOwnProperty( 'id' ) )
-                return false;
-            else if ( !user )
-                return false;
-            return true;
-        }
-    }
-
     render() {
-        const content = this.tokenIsValid( localStorage.token ) ? <Navbar /> : <LoginOrSignup />;
+        const content = helpers.getToken() ? <Navbar /> : <LoginOrSignup />;
         return (
             <div className='content-wrap'>
                 <div className='content'>
@@ -64,8 +53,8 @@ ReactDOM.render(
             <Route path = '/signup' component = { SignupForm } />
             <Route path = '/players' component = { Users } />
             <Route path = '/settings' component = { Settings } />
-            <Route path = '/teams' component = { Teams } />
-            <Route path = '/teams/create' component = { CreateTeams } />
+            <Route path = '/teams/my-teams' component = { userTeams } />
+            <Route path = '/teams' component = { Teams } exact />
             <Route path = '/team/:name' component = { getTeam } />
             <Route path = '/search' component = { Search } />
         </div>

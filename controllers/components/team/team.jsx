@@ -1,5 +1,6 @@
 import React from 'react';
 
+import helpers from '../helpers/helpers';
 import AdminTeam from './admin-team.jsx';
 import LeaderTeam from './leader-team.jsx';
 import PlayerTeam from './player-team.jsx';
@@ -8,8 +9,8 @@ import NormalTeamPage from './normal-team.jsx'
 export default class Team extends React.Component {
 
     _identifyUser() {
-        if ( localStorage.token ) {
-            const user = JSON.parse( atob( localStorage.token.split( '.' )[ 1 ] ) );
+        if ( helpers.getToken() ) {
+            const user = helpers.getToken();
 
             if ( user.isAdmin && this.props.teamId === user.team ) {
                 return 'admin';
