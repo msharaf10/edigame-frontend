@@ -1,0 +1,95 @@
+/* ========================= */
+/*  player wrap
+/* ========================= */
+.team-content h3 {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.team-content .team-info {
+    margin-top: 30px;
+    padding: 8px 0 8px 12px;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.team-content .team-info h4 {
+    font-size: 18px;
+}
+
+.team-info h4 span {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.players-wrap {
+    margin: 30px auto;
+    background: #eee;
+    padding: 20px 10px;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.players-wrap p {
+    text-align: center;
+}
+
+.players-wrap .player-wrap ul {
+    padding: 0;
+    list-style: none;
+}
+
+.players-wrap .player-wrap ul li {
+    padding: 2px 8px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.players-wrap .player-wrap ul .is-leader {
+    background: #d3fbdc;
+}
+
+
+.players-wrap .player-wrap ul li:hover .fa-check {
+    display: block;
+}
+
+.players-wrap .player-wrap ul li i {
+    float: right;
+    margin-top: 4px;
+    cursor: pointer;
+    transition: all .1s ease-out;
+}
+
+.fa-window-close:hover {
+    color: #dc3545;
+}
+
+.fa-check {
+    margin-right: 5px;
+    color: #28a745;
+    display: none;
+}
+
+/* ========================= */
+/*  search-error
+/* ========================= */
+.search-error-wrap {
+    width: 80%;
+}
+
+.search-error-message {
+    font-size: 22px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.search-error-message i {
+    margin-right: 15px;
+}
+
+.search-error-wrap form {
+    margin: auto;
+}
+
+#url-team {
+    font-weight: bold;
+}
