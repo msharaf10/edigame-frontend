@@ -67,8 +67,12 @@ router.delete( '/user', ( req, res, next ) => {
 // Teams
 // ======================
 // serve files
+router.get( '/teams/my-teams', ( req, res, next ) => {
+    res.sendFile( path.join( __dirname, '../public/views', 'index.html' ) );
+});
+
 router.get( '/teams', ( req, res, next ) => {
-    res.sendFile( path.join( __dirname, '..', '/public/views', 'index.html' ) );
+    res.sendFile( path.join( __dirname, '../public/views', 'index.html' ) );
 });
 
 router.get( '/teams/create', ( req, res, next ) => {
@@ -80,6 +84,10 @@ router.get( '/team/:name', ( req, res, next ) => {
 });
 
 // APIs
+router.get( '/api/teams/team/:name', ( req, res, next ) => {
+    request.get( config.apiURL + '/teams/team/' + req.params.name ).pipe( res );
+});
+
 router.get( '/teams/get-all-teams', ( req, res, next ) => {
     request.get( config.apiURL + '/teams' ).pipe( res );
 });
@@ -153,7 +161,7 @@ router.put( '/api/room/player/ready/toggle/:id', ( req, res, next ) => {
 // ======================
 // serve files
 router.get( '/search', (req, res, next ) => {
-    res.sendFile( path.join( __dirname, '../public/views', 'search.html' ) );
+    res.sendFile( path.join( __dirname, '../public/views', 'index.html' ) );
 });
 
 // APIs
@@ -166,7 +174,7 @@ router.get( '/api/search/team', ( req, res, next ) => {
 });
 
 router.get( '/api/search/team/:name/players', ( req, res, next ) => {
-    request.get( config.apiURL + '/teams/users/' + req.params.name ).pipe( res );
+    request.get( config.apiURL + '/teams/' + req.params.name + 'users/' ).pipe( res );
 })
 
 module.exports = router;

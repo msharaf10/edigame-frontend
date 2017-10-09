@@ -1,12 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
-import regex from '../helpers/regex';
-import Navbar from '../navbar.jsx';
+import helpers from '../helpers/helpers';
 
-const user = JSON.parse( atob( localStorage.token.split( '.' )[ 1 ] ) );
+const user = helpers.getToken();
 
-export default class CreateTeamForm extends React.Component {
+class CreateTeamForm extends React.Component {
     constructor( props ) {
         super( props );
 
@@ -84,7 +82,7 @@ export default class CreateTeamForm extends React.Component {
         }
 
 
-        if ( !( regex.stringHasSpace ).test( this.state.teamName ) ) {
+        if ( !( helpers.regex.stringHasSpace ).test( this.state.teamName ) ) {
             this.setState({
                 errorMessage: 'Only characters, numbers, underscore and dashes are valide names',
                 displayError: 'alert alert-danger',
@@ -202,18 +200,14 @@ export default class CreateTeamForm extends React.Component {
     }
 }
 
-class CreateTeam extends React.Component {
+export default class CreateTeam extends React.Component {
     render() {
         return (
             <div className='content-wrap'>
                 <div className='content'>
-                    <Navbar />
                     <CreateTeamForm />
                 </div>
             </div>
         );
     }
 }
-
-const root = document.getElementById( 'root' );
-ReactDOM.render( <CreateTeam />, root );

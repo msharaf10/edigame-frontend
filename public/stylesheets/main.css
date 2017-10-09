@@ -2,11 +2,20 @@
     margin: 0;
     box-sizing: border-box;
 }
+
 /* ========================= */
 /*  Navbar
 /* ========================= */
+.content-wrap {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+
 .navbar-wrap {
-    background: rgba(0,0,0,0.9);
+    background: rgba( 29, 27, 27, 0.9 );
+    border-bottom: 1px solid rgba( 0, 0, 0, 0.5 );
 }
 
 .navbar {
@@ -20,7 +29,7 @@
     width: 30px;
     height: 30px;
     border-radius: 20%;
-    box-shadow: 0px 0px 0px 2px #eee;
+    box-shadow: 0px 0px 0px 2px #fff;
 }
 
 .user-name {
@@ -63,8 +72,9 @@
     padding: 5px 15px;
 }
 .navbar form .form-control{
-    background-color: rgba(255,255,255,0.2);
+    background-color: rgb(81, 83, 85);
     transition: all .1s ease-out;
+    color: #b7b7b7;
 }
 
 .navbar form .form-control:focus {
@@ -75,6 +85,19 @@
 .navbar form .btn {
     margin-right: 5px;
 }
+
+.nav-item .dropdown-menu {
+    background: #26282b;
+}
+
+.nav-item .dropdown-menu a {
+    color: #fff;
+}
+
+.nav-item .dropdown-menu a:hover {
+    background: rgba(60, 62, 65, 0.43);
+}
+
 /* ========================= */
 /*  Buttons
 /* ========================= */

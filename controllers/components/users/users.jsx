@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Navbar from '../navbar.jsx';
-
 class FetchUsers extends React.Component {
 
     constructor( props ) {
@@ -189,29 +187,18 @@ class FetchUsers extends React.Component {
 
     render() {
         return (
-            <div>
-                <div className = 'container'>
-                    <h1>Fetch for players</h1>
-                    <div className = { this.state.displayError } role = 'alert'>{ this.state.errorMessage }</div>
-                    <div className = 'row'>{ this._showUsers() }</div>
-                </div>
+            <div className = 'container all-players-wrap'>
+                <h1>Fetch for players</h1>
+                <div className = { this.state.displayError } role = 'alert'>{ this.state.errorMessage }</div>
+                <div className = 'row'>{ this._showUsers() }</div>
             </div>
         );
     }
 }
 
-class Main extends React.Component {
+export default class Users extends React.Component {
 
     render() {
-        const navbar = localStorage.token ? <Navbar /> : '';
-        return (
-            <div>
-                { navbar }
-                <FetchUsers />
-            </div>
-        );
+        return <FetchUsers />;
     }
 }
-
-const root = document.getElementById( 'root' );
-ReactDOM.render( <Main />, root );

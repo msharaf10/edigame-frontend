@@ -1,4 +1,5 @@
 import React from 'react';
+import helpers from '../helpers/helpers';
 
 export default class AdminTeam extends React.Component {
     constructor( props ) {
@@ -41,9 +42,9 @@ export default class AdminTeam extends React.Component {
             return alert( 'There was a problem submitting your form. Please try again later' );
         }
     }
-    
+
     _removePlayer( e ) {
-        const admin = JSON.parse( atob( localStorage.token.split( '.' )[ 1 ] ) );
+        const admin = helpers.getToken();
         const id = e.target.closest('li').getAttribute( 'data-id' );
         const Confirm = confirm( 'Are you sure to remove this player?');
 
@@ -63,7 +64,7 @@ export default class AdminTeam extends React.Component {
         fetch( '/api/teams/remove/player', {
             headers: {
                 'Content-Type': 'application/json',
-                'x-access-token': localStorage.token
+                'x-access-token': helpers.getToken()
             },
             method: 'POST',
             body: JSON.stringify( data )
@@ -91,7 +92,7 @@ export default class AdminTeam extends React.Component {
 
 
     render() {
-        const admin = JSON.parse( atob( localStorage.token.split( '.' )[ 1 ] ) );
+        const admin = helpers.getToken();
 
         const players = this.state.players.map( ( player, i ) => {
             let leader = player.isLeader ? 'is-leader' : '';
