@@ -13,7 +13,7 @@ if ( app.get( 'env' ) !== 'production' )
 
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded({ extended: true }) );
-app.use( express.static( path.join(__dirname, 'public' )));
+app.use( express.static( path.join( __dirname, 'public' )));
 
 // =====================================
 // Routes
@@ -35,13 +35,12 @@ app.use( ( err, req, res, next ) => {
 	let status = err.status || 500;
 	let message;
 
-	if ( status >= 400 && status < 500 && err.message ) {
+	if ( status >= 400 && status < 500 && err.message )
 		message = err.message;
-	} else {
+	else
 		message = '';
 
-	}
-	res.status( status ).send( message );
+	res.status( status ).json( { message } );
 });
 
 let server = app.listen( config.port ),
