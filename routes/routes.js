@@ -5,48 +5,34 @@ const paths = require( './paths' );
 const requests = require( './requests' );
 
 const { validID } = require( '../helpers/helpers' );
+const { validateIDs } = require( '../routes/middlewares' );
 
 const router = express.Router();
-
 
 // =====================================
 // Middleware
 // =====================================
+router.use( validateIDs );
+
 router.param( 'id', ( req, res, next ) => {
     if ( !validID( req.params.id ) )
         return res.status( 400 ).json( { error: 'invalid id' } );
     next();
 });
 
-// validate mongoose objects ID
-exports.validateIDs = ( req, res, next ) => {
-
-	if ( req.body.userId && !validID( req.body.userId ) )
-		return res.status( 400 ).json( { error: 'Invalid ID' } );
-
-	if ( req.body.teamId && !validID( req.body.teamId ) )
-		return res.status( 400 ).json( { error: 'Invalid ID' } );
-
-	if ( req.body.adminId && !validID( req.body.adminId ) )
-		return res.status( 400 ).json( { error: 'Invalid ID' } );
-
-	next();
-}
-
 // =====================================
 // Routes
 // =====================================
 /*  Serve HTML File  */
 router.get( paths, ( req, res, next ) => {
-    res.sendFile( path.join( __dirname, '../public/views', 'index.html' ) );
+    res.sendFile( path.join( __dirname, '../public', 'index.html' ) );
 });
 
 // ======================
 // users
 // ======================
 router.route( '/api/users' )
-    .get( requests.getUsers )
-    .post( requests.signup );
+    .get( requests.getUsers );
 
 router.route( '/api/users/:q' )
     .get( requests.getUserByIdOrUsername );
@@ -66,11 +52,11 @@ router.route( '/api/requests/destroy' )
 
 router.route( '/api/notifications' )
     .get( requests.getAllNotifications )
-    .put( requests.markAllNotificationsAsSeenOrRead )
+    .put( requests.updateAllNotifications )
     .delete( requests.deleteAllNotifications );
 
 router.route( '/api/notifications/:id' )
-    .put( requests.markOneNotificationAsSeenOrRead )
+    .put( requests.updateOneNotification )
     .delete( requests.deleteOneNotification );
 
 router.route( '/api/admins' )
@@ -119,7 +105,8 @@ router.post( '/api/search/teams', requests.searchTeams );
 // Authentication
 // ======================
 router.post( '/api/auth/login', requests.loginUser );
+router.post( '/api/auth/signup', requests.signup );
 router.post( '/api/auth/reset-password', requests.resetPassword );
 router.post( '/api/auth/forgot-password', requests.forgotPassword );
 
-exports.routes = router;
+module.exports = router;

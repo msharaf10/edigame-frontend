@@ -9,10 +9,6 @@ exports.getUsers = ( req, res, next ) => {
     request.get( `${ apiURL }/users` ).pipe( res );
 }
 
-exports.signup = ( req, res, next ) => {
-    request.post( `${ apiURL }/users`, { form: req.body } ).pipe( res );
-}
-
 exports.getUserByIdOrUsername = ( req, res, next ) => {
     request.get( `${ apiURL }/users/${ req.params.q }`, {
         headers: { 'x-access-token': req.headers[ 'x-access-token' ] }
@@ -59,7 +55,7 @@ exports.getAllNotifications = ( req, res, next ) => {
     }).pipe( res );
 }
 
-exports.markAllNotificationsAsSeenOrRead = ( req, res, next ) => {
+exports.updateAllNotifications = ( req, res, next ) => {
     request.put( `${ apiURL }/notifications`, {
         headers: { 'x-access-token': req.headers[ 'x-access-token' ] },
         form: req.body
@@ -72,7 +68,7 @@ exports.deleteAllNotifications = ( req, res, next ) => {
     }).pipe( res );
 }
 
-exports.markOneNotificationAsSeenOrRead = ( req, res, next ) => {
+exports.updateOneNotification = ( req, res, next ) => {
     request.put( `${ apiURL }/notifications/${ req.params.id }`, {
         headers: { 'x-access-token': req.headers[ 'x-access-token' ] },
         form: req.body
@@ -189,6 +185,10 @@ exports.searchTeams = ( req, res, next ) => {
 // =====================================
 // Authentication
 // =====================================
+exports.signup = ( req, res, next ) => {
+    request.post( `${ apiURL }/users`, { form: req.body } ).pipe( res );
+}
+
 exports.loginUser = ( req, res, next ) => {
     request.post( `${ apiURL }/auth/token`, { form: req.body } ).pipe( res );
 }
