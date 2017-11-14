@@ -5,9 +5,9 @@ export const vaildEmail = email => {
     return ( regex ).test( email )
 }
 
-export const hasSpace = string => {
-    let regex = /^[a-zA-Z0-9-_]+$/
-    return !( regex ).test( string )
+export const validName = string => {
+    let regex = /^[a-zA-Z0-9_]{6,15}$/
+    return ( regex ).test( string )
 }
 
 export const validPhone = phone => {

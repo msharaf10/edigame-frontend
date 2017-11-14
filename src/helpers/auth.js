@@ -1,47 +1,32 @@
-/* Using (Browser LocalStorage API) To Get, Save or Remove Tokens */
+/* Using (Browser LocalStorage API) To Get, Save and Remove Tokens */
 
-export const options = ( method, data ) => ({
-    headers: {
-        'Content-Type': 'application/json',
-        'x-access-token': loadToken() || ''
-    },
-    method: method || 'GET',
-    body: data ? JSON.stringify( data ) : undefined
-})
+export const options = ( method, body ) => {
+    let { token } = loadToken()
+    return {
+        headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': token || ''
+        },
+        method: method || 'GET',
+        body: body ? JSON.stringify( body ) : undefined
+    }
+}
 
 export const loadToken = () => {
     let token, payload
     try {
         token = localStorage.getItem( 'token' )
         if ( token === null )
-            return undefined
+            return { undefined }
 
-        payload = JSON.stringify( atob( token.split( '.' )[ 1 ] ) )
+        payload = JSON.parse( atob( token.split( '.' )[ 1 ] ) )
         if ( !payload.hasOwnProperty( 'id' ) )
-            return undefined
+            return { undefined }
 
-        return token
+        return { token, payload }
     } catch ( err ) {
         removeToken()
-        return undefined
-    }
-}
-
-export const loadPayload = () => {
-    let token, payload
-    try {
-        token = localStorage.getItem( 'token' )
-        if ( token === null )
-            return undefined
-
-        payload = JSON.stringify( atob( token.split( '.' )[ 1 ] ) )
-        if ( !payload.hasOwnProperty( 'id' ) )
-            return undefined
-
-        return payload
-    } catch ( err ) {
-        removeToken()
-        return undefined
+        return { undefined }
     }
 }
 
