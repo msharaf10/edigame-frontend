@@ -6,13 +6,15 @@ const NotificationsList = ({
     notifications,
     onDeleteClick
 }) => {
-    let totalUnSeen = notifications.filter( n => n.seen === false ).length
+    const totalUnSeen = notifications.filter( n => n.seen === false ).length
     return (
         <div className = 'p-2 notifications-toggler'>
             <span className = 'toggle-n-list'>
                 {
                     totalUnSeen === 0 ? null :
-                    <span  className = 'new-n'>{ totalUnSeen }</span>
+                    <span className = 'badge badge-pill badge-primary'>
+                        { totalUnSeen }
+                    </span>
                 }
                 <i className = 'fa fa-globe' title = 'Notifications'></i>
                 <div className = 'notifications-holder'>

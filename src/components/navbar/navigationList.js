@@ -16,12 +16,17 @@ const NavigationList = ({
                     <Link to = '/' className = 'dropdown-item'>
                         Home
                     </Link>
-                    <Link to = { `/users/${ user.username }` } className = 'dropdown-item'>
-                        My Profile
-                    </Link>
-                    <Link to = '/my-teams' className = 'dropdown-item'>
-                        My Teams
-                    </Link>
+                    {
+                        role === 'SuperAdmin' ? null :
+                        <div>
+                            <Link to = { `/users/${ user.username }` } className = 'dropdown-item'>
+                                My Profile
+                            </Link>
+                            <Link to = '/my-teams' className = 'dropdown-item'>
+                                My Teams
+                            </Link>
+                        </div>
+                    }
                     <div className = 'dropdown-divider'></div>
                     <Link to = '/users' className = 'dropdown-item'>
                         Users

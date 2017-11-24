@@ -7,12 +7,15 @@ const RequestsList = ({
     onAcceptClick,
     onDeclineClick
 }) => {
-    let total = requests.length
+    const total = requests.length
     return (
         <div className = 'p-2 requests-toggler'>
             <span className = 'toggle-r-list'>
                 {
-                    total !== 0 ? <span className = 'new-r'>{ total }</span> : null
+                    total === 0 ? null :
+                    <span className = 'badge badge-pill badge-primary'>
+                        { total }
+                    </span>
                 }
                 <i className = 'fa fa-bell' title = 'Requests'></i>
                 <div className = 'requests-holder'>

@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Request = ({ date, from, senderId, team, teamId, onAcceptClick, onDeclineClick }) => {
-    let DATE = new Date( date ).toLocaleDateString()
+const Request = ({ date, sender, senderId, team, teamId, onAcceptClick, onDeclineClick }) => {
+    const DATE = new Date( date ).toLocaleDateString()
     return (
         <li>
             <div>
@@ -14,7 +14,7 @@ const Request = ({ date, from, senderId, team, teamId, onAcceptClick, onDeclineC
                     <div className = 'request-content'>
                         <span>
                             <span className = 'requester text-capitalize'>
-                                { from }
+                                { sender }
                             </span>
                             &nbsp;
                             <span>has invited you to join his team</span>
@@ -38,7 +38,7 @@ const Request = ({ date, from, senderId, team, teamId, onAcceptClick, onDeclineC
 
 Request.propTypes = {
     date: PropTypes.string.isRequired,
-    from: PropTypes.string.isRequired,
+    sender: PropTypes.string.isRequired,
     senderId: PropTypes.string.isRequired,
     team: PropTypes.string.isRequired,
     teamId: PropTypes.string.isRequired,
