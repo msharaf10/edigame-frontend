@@ -5,6 +5,12 @@ const { apiURL } = require( '../config/main' );
 // =====================================
 // Users
 // =====================================
+exports.getUserData = ( req, res, next ) => {
+    request.get( `${ apiURL }/user/getData`, {
+        headers: { 'x-access-token': req.headers[ 'x-access-token' ] }
+    }).pipe( res );
+}
+
 exports.getUsers = ( req, res, next ) => {
     request.get( `${ apiURL }/users` ).pipe( res );
 }
@@ -16,16 +22,22 @@ exports.getUserByIdOrUsername = ( req, res, next ) => {
 }
 
 exports.updateUserById = ( req, res, next ) => {
-    request.put( `${ apiURL }/users/${ req.params.q }`, {
+    request.put( `${ apiURL }/users/${ req.params.id }`, {
         headers: { 'x-access-token': req.headers[ 'x-access-token' ] },
         form: req.body
     }).pipe( res );
 }
 
 exports.deleteUserById = ( req, res, next ) => {
-    request.delete( `${ apiURL }/users/${ req.params.q }`, {
+    request.delete( `${ apiURL }/users/${ req.params.id }`, {
         headers: { 'x-access-token': req.headers[ 'x-access-token' ] },
         form: req.body
+    }).pipe( res );
+}
+
+exports.getSentTeamRequests = ( req, res, next ) => {
+    request.get( `${ apiURL }/requests/teams/sent`, {
+        headers: { 'x-access-token': req.headers[ 'x-access-token' ] }
     }).pipe( res );
 }
 
@@ -36,14 +48,14 @@ exports.getTeamRequests = ( req, res, next ) => {
 }
 
 exports.sendTeamRequest = ( req, res, next ) => {
-    request.post( `${ apiURL }/requests/send`, {
+    request.post( `${ apiURL }/requests/teams/send`, {
         headers: { 'x-access-token': req.headers[ 'x-access-token' ] },
         form: req.body
     }).pipe( res );
 }
 
 exports.declineTeamRequest = ( req, res, next ) => {
-    request.delete( `${ apiURL }/requests/destroy`, {
+    request.delete( `${ apiURL }/requests/teams/destroy`, {
         headers: { 'x-access-token': req.headers[ 'x-access-token' ] },
         form: req.body
     }).pipe( res );

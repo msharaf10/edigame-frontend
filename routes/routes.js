@@ -31,6 +31,9 @@ router.get( paths, ( req, res, next ) => {
 // ======================
 // users
 // ======================
+router.route( '/api/user/getData' )
+    .get( requests.getUserData );
+
 router.route( '/api/users' )
     .get( requests.getUsers );
 
@@ -44,11 +47,14 @@ router.route( '/api/users/:id' )
 router.route( '/api/requests/teams' )
     .get( requests.getTeamRequests );
 
-router.route( '/api/requests/send' )
+router.route( '/api/requests/teams/send' )
     .post( requests.sendTeamRequest );
 
-router.route( '/api/requests/destroy' )
+router.route( '/api/requests/teams/destroy' )
     .delete( requests.declineTeamRequest );
+
+router.route( '/api/requests/teams/sent' )
+    .get( requests.getSentTeamRequests );
 
 router.route( '/api/notifications' )
     .get( requests.getAllNotifications )
