@@ -168,6 +168,13 @@ exports.removeMemberFromTeam = ( req, res, next ) => {
     }).pipe( res );
 }
 
+exports.makeLeader = ( req, res, next ) => {
+    request.post( `${ apiURL }/teams/members/leader` , {
+        headers: { 'x-access-token': req.headers[ 'x-access-token' ] },
+        form: req.body
+    }).pipe( res );
+}
+
 // =====================================
 // Search
 // =====================================

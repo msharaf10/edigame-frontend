@@ -95,6 +95,9 @@ router.route( '/api/teams/members/add' )
 router.route( '/api/teams/members/destroy' )
 	.delete( requests.removeMemberFromTeam );
 
+router.route( '/api/teams/members/leader' )
+    .post( requests.makeLeader );
+
 // ======================
 // Search
 // ======================
