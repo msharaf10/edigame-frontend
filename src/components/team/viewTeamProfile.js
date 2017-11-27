@@ -4,7 +4,9 @@ import TeamInfo from './teamInfo'
 import Member from './member'
 
 const ViewTeamProfile = ({ team, payload, onMakeLeader, onRemoveMember, onTeamReady }) => {
-    const { _id, name, author, company, finished, started, isVerified, members } = team
+    const { _id, name, author, company, finished, started, isReady, isVerified, members } = team
+    const teamHasLeader = members.findIndex( member => member.isLeader ) > -1
+    debugger
     return (
         <div className = 'team-profile-holder'>
             <div className = 'container'>
@@ -26,10 +28,10 @@ const ViewTeamProfile = ({ team, payload, onMakeLeader, onRemoveMember, onTeamRe
                                 <tr>
                                     <th scope = 'col'>#</th>
                                     <th scope = 'col'>Member Name</th>
-                                    <th scope = 'col'>Username</th>
+                                    <th scope = 'col'>Role</th>
                                     {
-                                        !started && payload._id !== author._id ? null :
-                                        <th scope = 'col'>Options</th>
+                                        !started && !isReady && payload._id === author._id ?
+                                        <th scope = 'col'>Options</th> : null
                                     }
                                 </tr>
                             </thead>
@@ -49,17 +51,23 @@ const ViewTeamProfile = ({ team, payload, onMakeLeader, onRemoveMember, onTeamRe
                                 }
                             </tbody>
                         </table>
+                        {
+                            !started && members.length === 5 && !teamHasLeader && payload._id === author._id ?
+                            <div className = 'alert alert-info'>
+                                To get started, You have to choose a member to be the <strong>leader</strong> of this team.
+                            </div> : null
+                        }
                     </div>
                 </div>
                 {
-                    !started && payload._id === author._id && members.length !== 5 ? null :
+                    !started && !isReady && members.length === 5 && teamHasLeader && payload._id === author._id ?
                     <div className = 'team-ready-button'>
                         <button
                             className = 'btn btn-success'
                             onClick = { () => onTeamReady( _id ) }>
                             Ready?
                         </button>
-                    </div>
+                    </div> : null
                 }
             </div>
         </div>

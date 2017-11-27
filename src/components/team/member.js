@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 const Member = ({ member, index, team, payload, onMakeLeader, onRemoveMember }) => {
-    const { _id, firstName, lastName, username, isLeader } = member
+    const { _id, firstName, lastName, username, isLeader, role } = member
     return (
         <tr className = { `team-member-item ${ isLeader ? 'alert-primary' : '' }` } title = { isLeader ? 'Team Leader' : '' }>
             <th scope = 'row'>{ index }</th>
@@ -12,12 +12,16 @@ const Member = ({ member, index, team, payload, onMakeLeader, onRemoveMember }) 
                     { `${ firstName } ${ lastName }` }
                 </Link>
             </td>
-            <td>{ `@${ username }` }</td>
+            <td>
+                {
+                    role ? `${ role }` : 'NA'
+                }
+            </td>
             {
-                !team.started && payload._id !== team.author._id ? null :
+                !team.started && !team.isReady && payload._id === team.author._id ?
                 <td>
                     {
-                        isLeader ? null :
+                        isLeader ? <span>Leader</span> :
                         <button
                             onClick = { () => onMakeLeader( _id, team._id ) }
                             className = 'member-leader btn btn-sm btn-secondary'>
@@ -30,11 +34,12 @@ const Member = ({ member, index, team, payload, onMakeLeader, onRemoveMember }) 
                         className = 'member-remover btn btn-sm btn-secondary'>
                         <i className = 'fa fa-times'></i>
                     </button>
-                </td>
+                </td> : null
             }
         </tr>
     )
 }
+
 Member.propTypes = {
     member: PropTypes.object.isRequired,
     index: PropTypes.number.isRequired,
