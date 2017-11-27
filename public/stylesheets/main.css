@@ -1,0 +1,427 @@
+.alert {
+    font-size: 12px;
+}
+.btn {
+    cursor: pointer;
+}
+
+/* not-found page */
+.not-found-wrap {
+    text-align: center;
+    width: max-content;
+    margin: 0 auto;
+}
+.not-found-wrap p {
+    font-size: 32px;
+    font-weight: bold;
+}
+/* popup register */
+.popup-rgs {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background: #eee;
+    padding: 50px 0;
+    z-index: 1000;
+}
+.popup-rgs a {
+    padding: 10px 60px;
+    margin: 0 10px;
+}
+/************************************/
+/*  Navbar
+/************************************/
+.ui-f p {
+    font-size: 14px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+    text-align: center;
+}
+
+.ui-f h3 {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.ui-f h4 {
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #000;
+    width: max-content;
+}
+
+/************************************/
+/*  Navbar
+/************************************/
+.dropdown-toggle::after {
+    content: none;
+}
+
+.dropdown-menu {
+    font-size: 12px;
+}
+
+.navbar-holder {
+    background: #eee;
+    height: 50px;
+    border-bottom: 2px solid #ccc;
+    font-size: 14px;
+    padding: 0 20px;
+}
+
+.notification-title span, .request-title span {
+    display: block;
+}
+
+.notification-title span:first-child, .request-title span:first-child {
+    font-weight: bold;
+}
+
+.notification-title span:last-child, .request-title span:last-child {
+    color: #888;
+    font-size: 10px;
+}
+
+.requester {
+    font-weight: bold;
+}
+.notifications-toggler .toggle-n-list, .requests-toggler .toggle-r-list {
+    position: relative;
+    font-size: 12px;
+}
+
+.toggle-n-list i:hover, .toggle-r-list i:hover {
+    box-shadow: 0 0 0 0.2rem rgba(134,142,150,.5);
+    cursor: pointer;
+}
+
+.notifications-toggler .toggle-n-list:hover .notifications-holder {
+    display: block;
+}
+
+.requests-toggler .toggle-r-list:hover .requests-holder {
+    display: block;
+}
+
+.notifications-toggler .toggle-n-list i, .requests-toggler .toggle-r-list i {
+    padding: 7px;
+    transition: .2s;
+    background: #868e96;
+    border-radius: 3px;
+    color: #fff;
+}
+
+.p-2 .badge-primary {
+    position: absolute;
+    top: -10px;
+    right: -6px;
+    line-height: 10px;
+}
+
+/*.notifications-toggler .new-n, .requests-toggler .new-r {
+    position: absolute;
+    background: red;
+    width: 16px;
+    height: 15px;
+    text-align: center;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 17px;
+    margin-right: -5px;
+    right: 0;
+    top: -10px;
+    color: #fff;
+}*/
+
+.notifications-holder::after, .requests-holder::after {
+    top: -5px;
+    right: 0px;
+    width: 40px;
+    height: 5px;
+    position: absolute;
+    display: inline-block;
+    content: "";
+}
+.notifications-toggler .notifications-holder, .requests-toggler .requests-holder {
+    display: none;
+    position: absolute;
+    top: 22px;
+    z-index: 1000;
+    float: left;
+    min-width: 10rem;
+    padding: .5rem;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+    right: 0px;
+    width: 350px;
+    height: auto;
+    font-size: 12px;
+}
+
+.notifications-holder .notification-list, .requests-holder .request-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.notifications-holder .delete-n {
+    background: #ddd;
+    padding: 0px 4px;
+    font-weight: bold;
+    margin-right: 5px;
+    font-size: 16px;
+    float: right;
+    border: 1px solid #9a9a9a;
+    border-radius: 50%;
+    line-height: 17px;
+    cursor: pointer;
+}
+
+/************************************/
+/*  HomePage
+/************************************/
+.homepage-holder {
+    width: 70%;
+    margin: auto;
+    margin-top: 20px;
+    padding: 50px;
+    border-radius: 10px;
+    background: #ddd;
+    text-align: center;
+}
+
+.homepage-holder span {
+    font-weight: bold;
+}
+
+/************************************/
+/*  UserProfile
+/************************************/
+.profile-holder {
+    margin-top: 50px;
+}
+
+.option-profile {
+    float: right;
+}
+
+.profile-holder .avatar-wrap {
+    width: max-content;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+.profile-holder .profile-fullname {
+    margin: 0;
+}
+
+.profile-holder .profile-username {
+    width: max-content;
+    margin: 0 auto;
+    background: #ddd;
+    border-radius: 5px;
+    padding: 0 5px;
+    font-size: 12px;
+    color: #62646b;
+}
+
+/************************************/
+/*  My-teams Page
+/************************************/
+.user-teams-holder h4 {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.user-teams-holder .list-group {
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.user-teams-holder .list-group .teams-list-header .team-company {
+    float: right;
+}
+
+.user-teams-holder .list-group .item-team-company {
+    float: right;
+}
+
+/************************************/
+/*  TeamsPage
+/************************************/
+.teams-holder, .users-holder {
+    padding: 0 25px;
+    margin: 20px auto;
+}
+
+.teams-holder h3, .users-holder h3 {
+    margin-bottom: 20px;
+}
+
+.teams-holder .p-2 {
+    width: 250px;
+    margin: 0 5px 5px 5px;
+}
+
+.finder-wrap {
+    width: fit-content;
+    margin-bottom: 20px;
+}
+
+.finder-wrap label {
+    font-weight: bold;
+}
+
+/************************************/
+/*  UsersPage
+/************************************/
+.div1 {
+    background: rgba(0,0,0,0.5);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 1000;
+}
+.div2 {
+    margin: auto;
+    width: 50%;
+    background: #fff;
+    position: absolute;
+    top: 50%;
+    transform: translate(50%, -50%);
+    text-align: center;
+    padding: 100px;
+}
+
+/* add member modal */
+.add-member-modal {
+    position: fixed;
+    z-index: 1001;
+    background: rgba( 0, 0, 0, 0.5 );
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: 0;
+}
+
+.add-member-modal .add-new-member {
+    position: relative;
+    transform: translate(0,0);
+    max-width: 700px;
+    margin: 70px auto;
+    background: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.add-member-modal .add-modal-content .member-info p {
+    text-align: center;
+    font-size: 24px;
+    margin: 0;
+    font-weight: bold;
+}
+
+.add-member-modal .add-modal-content .close-add-modal {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px 10px;
+    cursor: pointer;
+    color: #969696;
+}
+
+.add-member-modal .add-modal-content .close-add-modal:hover {
+    color: #000;
+}
+
+.add-member-modal .add-modal-header, .add-member-modal .add-modal-body {
+    padding: 15px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.add-member-modal .add-modal-footer {
+    padding: 15px;
+}
+
+/* end add member modal */
+
+.users-holder .p-2 {
+    width: fit-content;
+    margin: 0 5px 5px 5px;
+    text-align: center;
+}
+
+.users-holder .u-admin {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #007bff;
+    font-size: 22px;
+}
+
+.user-card-body a {
+    display: block;
+    margin: 10px 0;
+}
+
+.user-card-body button {
+    font-size: 14px;
+}
+
+/************************************/
+/*  TeamProfile
+/************************************/
+.team-profile-holder h3 {
+    text-align: center;
+    margin: 20px 0 30px 0;
+}
+.team-profile-holder .team-ready-button {
+    border-top: 1px solid;
+    padding-top: 20px;
+    margin: 50px 0;
+    text-align: center;
+}
+
+.team-profile-holder .team-ready-button button {
+    font-size: 32px;
+    padding: 20px 100px;
+}
+
+.team-profile-holder .main-info span, .team-profile-holder .basic-info span {
+    display: block;
+}
+
+thead {
+    background: #007bff;
+    color: #fff;
+}
+
+.team-member-item:hover .member-remover, .team-member-item:hover .member-leader {
+    visibility: visible;
+}
+
+.team-profile-holder .team-member-item button {
+    color: #000;
+    font-size: 12px;
+}
+
+.team-member-item .member-remover, .team-member-item .member-leader {
+    visibility: hidden;
+}
+
+.team-member-item .member-remover {
+    margin-left: 20px;
+}
