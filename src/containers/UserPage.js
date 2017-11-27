@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { fetchUserProfile } from '../actions/index'
+import { fetchUserProfile, removeUserPageData } from '../actions/index'
 import NotFound from '../components/notFound'
 import UserProfile from '../components/user/userProfile'
 import ViewUserProfile from '../components/user/viewUserProfile'
@@ -22,6 +22,11 @@ class UserPage extends Component {
         const newParam = nextProps.match.params.q
         if ( newParam !== oldParam )
             this.fetchProfile( newParam )
+    }
+
+    componentWillUnmount() {
+        const { dispatch } = this.props
+        dispatch( removeUserPageData() )
     }
 
     fetchProfile = param => {

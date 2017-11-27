@@ -24,8 +24,15 @@ class TeamsOfUser extends Component {
         const { teams } = this.props
         if ( !teams.length )
             return (
-                <div className = 'container'>
-                    <p className = 'text-center'>You have no teams.</p>
+                <div className = 'container user-teams-holder'>
+                    <h4>My Teams List</h4>
+                    <ul className = 'list-group'>
+                        <li className = 'list-group-item teams-list-header active'>
+                            <span className = 'team-name'>Team Name</span>
+                            <span className = 'team-company'>Company</span>
+                        </li>
+                        <li className = 'list-group-item text-center'>You have no teams.</li>
+                    </ul>
                 </div>
             )
         return <UserTeams teams = { teams } />

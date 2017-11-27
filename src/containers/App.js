@@ -7,10 +7,10 @@ import Login from './auth/Login'
 import HomePage from './HomePage'
 import PopupRegister from './auth/PopupRegister'
 
-import { fetchUser } from '../actions/index'
-import { loadToken, loadPayload } from '../helpers/auth'
+import { fetchUserData } from '../actions/index'
+import { loadToken } from '../helpers/auth'
 
-let token = loadToken()
+const { token, payload } = loadToken()
 
 class App extends Component {
     static propTypes = {
@@ -20,14 +20,14 @@ class App extends Component {
 
     componentDidMount() {
         const { dispatch } = this.props
-        if ( token ) {
-            let { id } = loadPayload()
-            dispatch( fetchUser( id ) )
+        if ( token !== undefined ) {
+            const { id } = payload
+            dispatch( fetchUserData( id ) )
         }
     }
 
     render() {
-        let path = window.location.pathname
+        const path = window.location.pathname
 
         if ( !token )
             switch ( path ) {
@@ -35,6 +35,8 @@ class App extends Component {
                     return <Login />
                 case '/login':
                 case '/signup':
+                case '/reset-password':
+                case '/forgot-password':
                     return null
                 default:
                     return <PopupRegister />

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { logoutUser } from '../actions/index'
+import { logoutUser, deleteNotification, acceptTeamRequest, declineTeamRequest } from '../actions/index'
 
 import Loading from '../components/loading'
 import UserInfo from '../components/navbar/userInfo'
@@ -20,16 +20,19 @@ const Navbar = ({ dispatch, payload, requests, notifications }) => {
         <div className = 'd-flex align-items-center navbar-holder'>
             <UserInfo { ...payload } />
             {
-                payload.role === 'Client' ?
+                payload.role !== 'Client' ? null :
                 <RequestsList
-                    onAcceptClick = { ( adminId, teamId ) => alert( `admin ${adminId} team ${teamId}` ) }
-                    onDeclineClick = { team => alert( `team ${team}` ) }
-                    requests = { requests } /> : null
+                    onAcceptClick = { ( adminId, teamId ) => dispatch( acceptTeamRequest( adminId, teamId ) ) }
+                    onDeclineClick = { teamId => dispatch( declineTeamRequest( payload._id, teamId ) ) }
+                    requests = { requests } />
             }
-            <NotificationsList
-                notifications = { notifications }
-                onDeleteClick = { id => alert( id ) }
-            />
+            {
+                payload.role === 'SuperAdmin' ? null :
+                <NotificationsList
+                    notifications = { notifications }
+                    onDeleteClick = { id => dispatch( deleteNotification( id ) ) }
+                />
+            }
             <NavigationList
                 user = { payload }
                 onLogoutClick = { e => {
