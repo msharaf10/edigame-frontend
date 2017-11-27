@@ -6,6 +6,9 @@ import Root from './containers/Root'
 import configureStore from './store/configureStore'
 
 const store = configureStore()
+if ( process.env.NODE_ENV !== 'production' ) {
+    window.store = store
+}
 
 render(
     <Router>

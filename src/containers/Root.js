@@ -13,7 +13,8 @@ import ForgotPassword from './auth/ForgotPassword'
 import UserPage from './UserPage'
 import UsersPage from './UsersPage'
 import TeamsPage from './TeamsPage'
-import CreateTeam from './CreateTeam'
+import CreateTeamPage from './CreateTeamPage'
+import TeamsOfUserPage from './TeamsOfUserPage'
 import TeamPage from './TeamPage'
 import SearchPage from './SearchPage'
 import HelpPage from './HelpPage'
@@ -30,8 +31,9 @@ const Root = ({ store }) => (
             <Route path = '/users/:q' component = { UserPage } />
             <Route path = '/users' component = { UsersPage } exact />
             <Route path = '/teams' component = { TeamsPage } exact />
+            <Route path = '/my-teams' component = { TeamsOfUserPage } />
             <Switch>
-                <Route path = '/teams/create' component = { CreateTeam } />
+                <Route path = '/teams/create' component = { CreateTeamPage } />
                 <Route path = '/teams/:q' component = { TeamPage } />
             </Switch>
             <Route path = '/search' component = { SearchPage } />
