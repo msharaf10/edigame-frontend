@@ -22,7 +22,7 @@ const logger = require( 'morgan' );
 const path = require( 'path' );
 
 const { server } = require( './config/main' );
-const { routes, validateIDs } = require( './routes/routes' );
+const routes = require( './routes/routes' );
 
 const app = express();
 
@@ -33,7 +33,6 @@ app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded( { extended: true } ) );
 app.use( express.static( path.join( __dirname, 'public' ) ) );
 
-app.use( validateIDs );
 app.use( '/', routes );
 
 // =====================================
