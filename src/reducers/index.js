@@ -1,14 +1,16 @@
 import { combineReducers } from 'redux'
+import profile from './profile'
 import user from './user'
 import users from './users'
-import team from './team'
+import teamProfile from './team'
 import teams from './teams'
 import filter from './filter'
 
 const rootReducer = combineReducers({
+    profile,
     user,
     users,
-    team,
+    teamProfile,
     teams,
     filter
 })

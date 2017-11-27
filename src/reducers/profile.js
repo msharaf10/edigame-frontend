@@ -13,6 +13,8 @@ const profile = ( state = initialState, action ) => {
         case ActionTypes.USER_PROFILE_NOT_FOUND:
             let { msg } = action
             return { user: {}, msg }
+        case ActionTypes.REMOVE_USER_PAGE_DATA:
+            return initialState
         default:
             return state
     }
