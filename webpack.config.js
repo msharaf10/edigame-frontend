@@ -1,3 +1,6 @@
+/* clear the console */
+process.stdout.write('\x1Bc');
+
 const WatchLiveReloadPlugin = require( 'webpack-watch-livereload-plugin' );
 const webpack = require( 'webpack' );
 const path = require( 'path' );
