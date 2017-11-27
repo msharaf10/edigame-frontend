@@ -1,16 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
-const NotFound = ({ msg }) => (
+const NotFound = () => (
     <div className = 'not-found-wrap'>
-        <p className = 'text-capitalize'>{ msg }</p>
-        <form>
-            <input className = 'form-control' placeholder = 'search' />
-        </form>
+        <p className = 'text-capitalize'>Page not found</p>
+        <Link to = '/'>Go to Homepage</Link>
     </div>
 )
 
-NotFound.propTypes = {
-    msg: PropTypes.string.isRequired
-}
 export default NotFound
