@@ -1,44 +1,55 @@
-const WatchLiveReloadPlugin = require('webpack-watch-livereload-plugin');
+/* clear the console */
+process.stdout.write('\x1Bc');
+
+const WatchLiveReloadPlugin = require( 'webpack-watch-livereload-plugin' );
 const webpack = require( 'webpack' );
 const path = require( 'path' );
 
+const PLUGINS_PROD = [
+    new webpack.DefinePlugin({
+        'process.env': {
+            'NODE_ENV': JSON.stringify( 'production' )
+        }
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+        compress: {
+            warnings: false,
+            drop_console: true
+        },
+        parallel: {
+            cache: true,
+            workers: 2
+        }
+    })
+];
+
+const PLUGINS_DEV = [
+    new WatchLiveReloadPlugin({
+        files: [
+            '**/**/*.js',
+            '**/**/*.css'
+        ]
+    })
+];
+
 module.exports = {
     entry: {
-        index: './controllers/components/index/index.jsx'
+        index: './src/index.js',
+        auth: './src/assets/js/auth.js',
+        main: './src/assets/js/main.js'
     },
     output: {
-        path: path.join(__dirname, 'public/js'),
-		filename: '[name].min.js'
-	},
+        path: path.join( __dirname, 'public/js' ),
+        filename: '[name].min.js'
+    },
     module: {
         loaders: [
             {
-                test: /\.jsx?$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['react', 'es2015']
-                }
-            },
-            {
-                test: /\.js?$/,
+                test: /\.js|.jsx?$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
-                query: {
-                    presets: ['react', 'es2015']
-                }
             }
         ]
-	},
-	plugins: [
-		new WatchLiveReloadPlugin({
-			files: [
-                '**/**/*.js',
-				'**/**/*.css'
-			]
-		}),
-        new webpack.optimize.UglifyJsPlugin({
-          compress: { warnings: false, drop_console: true }
-        })
-	]
+    },
+    plugins: process.env.NODE_ENV === 'production' ? PLUGINS_PROD : PLUGINS_DEV
 };

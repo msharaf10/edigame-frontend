@@ -1,172 +1,121 @@
 const express = require( 'express' );
-const request = require( 'request' );
 const path = require( 'path' );
 
-const config = require( '../models/config' );
+const paths = require( './paths' );
+const requests = require( './requests' );
 
-const app = express();
+const { validID } = require( '../helpers/helpers' );
+const { validateIDs } = require( '../routes/middlewares' );
+
 const router = express.Router();
+
+// =====================================
+// Middleware
+// =====================================
+router.use( validateIDs );
+
+router.param( 'id', ( req, res, next ) => {
+    if ( !validID( req.params.id ) )
+        return res.status( 400 ).json( { error: 'invalid id' } );
+    next();
+});
 
 // =====================================
 // Routes
 // =====================================
+/*  Serve HTML File  */
+router.get( paths, ( req, res, next ) => {
+    res.sendFile( path.join( __dirname, '../public', 'index.html' ) );
+});
 
 // ======================
 // users
 // ======================
-// serve files
-router.get( '/', ( req, res, next ) => {
-    res.sendFile( path.join( __dirname, '../public/views', 'index.html' ) );
-});
+router.route( '/api/user/getData' )
+    .get( requests.getUserData );
 
-router.get( '/signup', ( req, res, next ) => {
-    res.sendFile( path.join( __dirname, '../public/views', 'index.html' ) );
-});
+router.route( '/api/users' )
+    .get( requests.getUsers );
 
-router.get( '/players', ( req, res, next ) => {
-    res.sendFile( path.join( __dirname, '../public/views', 'index.html' ) );
-});
+router.route( '/api/users/:q' )
+    .get( requests.getUserByIdOrUsername );
 
-router.get( '/settings', ( req, res, next ) => {
-    res.sendFile( path.join( __dirname, '../public/views', 'index.html' ) );
-});
+router.route( '/api/users/:id' )
+    .put( requests.updateUserById )
+    .delete( requests.deleteUserById );
 
-// APIs
-router.get( '/users/get-one-user/:id', ( req, res, next ) => {
-    console.log( req.params );
-    request.get( config.apiURL + '/users/' + req.params.id ).pipe( res );
-});
+router.route( '/api/requests/teams' )
+    .get( requests.getTeamRequests );
 
-router.get( '/users/get-all-users', ( req, res, next) => {
-    request.get( config.apiURL + '/users' ).pipe( res );
-})
+router.route( '/api/requests/teams/send' )
+    .post( requests.sendTeamRequest );
 
-router.post( '/login', ( req, res, next ) => {
-    request.post( config.apiURL + '/auth/token', { form: req.body } ).pipe( res );
-});
+router.route( '/api/requests/teams/destroy' )
+    .delete( requests.declineTeamRequest );
 
-router.post( '/signup', ( req, res, next ) => {
-    request.post( config.apiURL + '/users', { form: req.body } ).pipe( res );
-});
+router.route( '/api/requests/teams/sent' )
+    .get( requests.getSentTeamRequests );
 
-router.put( '/settings', ( req, res, next ) => {
-    request.put( config.apiURL + '/users/' + req.body.id, {
-        headers: { 'x-access-token' : req.headers[ 'x-access-token' ] },
-        form: req.body
-    }).pipe( res );
-});
+router.route( '/api/notifications' )
+    .get( requests.getAllNotifications )
+    .put( requests.updateAllNotifications )
+    .delete( requests.deleteAllNotifications );
 
-router.delete( '/user', ( req, res, next ) => {
-    request.delete( config.apiURL + '/users/' + req.body.id, {
-        headers: { 'x-access-token' : req.headers[ 'x-access-token' ] },
-        form: req.body
-    }).pipe( res );
-});
+router.route( '/api/notifications/:id' )
+    .put( requests.updateOneNotification )
+    .delete( requests.deleteOneNotification );
+
+router.route( '/api/admins' )
+    .post( requests.adminPromotion )
+    .delete( requests.adminDemotion );
 
 // ======================
 // Teams
 // ======================
-// serve files
-router.get( '/teams', ( req, res, next ) => {
-    res.sendFile( path.join( __dirname, '..', '/public/views', 'index.html' ) );
-});
+router.route( '/api/teams' )
+	.get( requests.getTeams )
+	.post( requests.createTeam );
 
-router.get( '/teams/create', ( req, res, next ) => {
-    res.sendFile( path.join( __dirname, '../public/views', 'index.html' ) );
-});
+router.route( '/api/teams/:q' )
+	.get( requests.getTeamByIdOrName );
 
-router.get( '/team/:name', ( req, res, next ) => {
-    res.sendFile( path.join( __dirname, '../public/views', 'index.html' ) );
-});
+router.route( '/api/teams/:id' )
+	.put( requests.updateTeamById );
 
-// APIs
-router.get( '/teams/get-all-teams', ( req, res, next ) => {
-    request.get( config.apiURL + '/teams' ).pipe( res );
-});
+router.route( '/api/teams/users/:id' )
+	.get( requests.getTeamsOfUserOrAdmin );
 
-router.get( '/teams/get-one-team/:id', ( req, res, next ) => {
-    request.get( config.apiURL + '/teams/' + req.params.id ).pipe( res );
-});
+router.route( '/api/teams/:id/ready' )
+	.get( requests.getReadyMembers )
+	.post( requests.toggleReadyState );
 
-router.post( '/teams/create', ( req, res, next ) => {
-    request.post( config.apiURL + '/teams', {
-        headers: { 'x-access-token' : req.headers[ 'x-access-token' ] },
-        form: req.body
-    }).pipe( res );
-});
+router.route( '/api/teams/members/add' )
+	.post( requests.addMemberToTeam );
 
-router.put( '/teams', ( req, res, next ) => {
-    request.put( config.apiURL + '/teams/' + req.body.id, {
-        headers: { 'x-access-token' : req.headers[ 'x-access-token' ] },
-        form: req.body
-    }).pipe( res );
-});
+router.route( '/api/teams/members/destroy' )
+	.delete( requests.removeMemberFromTeam );
 
-router.delete( '/teams', ( req, res, next ) => {
-    request.delete( config.apiURL + '/teams/' + req.body.id, {
-        headers: { 'x-access-token' : req.headers[ 'x-access-token' ] }
-    }).pipe( res );
-});
-
-router.post( '/api/teams/add/player', ( req, res, next ) => {
-    console.log( req.body );
-    request.post( config.apiURL + '/teams/add/user', {
-        headers: { 'x-access-token': req.headers[ 'x-access-token' ] },
-        form: req.body
-    }).pipe( res );
-});
-
-router.post( '/api/teams/remove/player', ( req, res, next ) => {
-    request.post( config.apiURL + '/teams/remove/user', {
-        headers: { 'x-access-token': req.headers[ 'x-access-token' ] },
-        form: req.body
-    }).pipe( res );
-});
-
-// ======================
-// rooms
-// ======================
-// serve files
-router.get( '/room/team/:id/ready', ( req, res, next ) => {
-    res.sendFile( path.join( __dirname, '../public/views', 'room-ready.html' ) );
-});
-
-router.get( '/room/team/:id/online', ( req, res, next ) => {
-    res.sendFile( path.join( __dirname, '../public/views', 'room-online.html' ) );
-});
-
-// APIs
-router.put( '/api/room/ready/:id', ( req, res, next ) => {
-    request.get( config.apiURL + '/room/ready/' + req.params.id ).pipe( res );
-});
-
-router.get( '/api/room/online/:id', ( req, res, next ) => {
-    request.get( config.apiURL + '/room/online/' + req.params.id ).pipe( res );
-});
-
-router.put( '/api/room/player/ready/toggle/:id', ( req, res, next ) => {
-    request.put( config.apiURL + '/room/user/ready/toggle' + req.params.id)
-});
+router.route( '/api/teams/members/leader' )
+    .post( requests.makeLeader );
 
 // ======================
 // Search
 // ======================
-// serve files
-router.get( '/search', (req, res, next ) => {
-    res.sendFile( path.join( __dirname, '../public/views', 'search.html' ) );
-});
+router.post( '/api/search', requests.searchAny );
+router.post( '/api/search/users', requests.searchUsers );
+router.post( '/api/search/teams', requests.searchTeams );
 
-// APIs
-router.get( '/api/search/user', ( req, res, next ) => {
-    request.get( config.apiURL + '/search/user?q=' + req.query.q ).pipe( res );
-});
+// ======================
+// Match/Run
+// ======================
+// match routes here
 
-router.get( '/api/search/team', ( req, res, next ) => {
-    request.get( config.apiURL + '/search/team?q=' + req.query.q ).pipe( res );
-});
-
-router.get( '/api/search/team/:name/players', ( req, res, next ) => {
-    request.get( config.apiURL + '/teams/users/' + req.params.name ).pipe( res );
-})
+// ======================
+// Authentication
+// ======================
+router.post( '/api/auth/login', requests.loginUser );
+router.post( '/api/auth/signup', requests.signup );
+router.post( '/api/auth/reset-password', requests.resetPassword );
+router.post( '/api/auth/forgot-password', requests.forgotPassword );
 
 module.exports = router;
